@@ -34,15 +34,34 @@ class Automaton implements Iterable<State> {
     initialState: State;
     currentState: State;
     invalidState: State;
+    symbols: string[];
 
     constructor (initialState: State) {
         this.initialState = initialState;
         this.currentState = initialState;
         this.invalidState = new State();
+        this.symbols = [];
+        this.postConstructor();
     }
 
     [Symbol.iterator](): Iterator<State, any, undefined> {
         return new AutomatonIterator(this);
+    }
+
+    private postConstructor() {
+
+        var stateCounter = 0;
+        const symbols = new Set<string>();
+
+        for (const state of this) {
+            state.label = "q" + stateCounter;
+            stateCounter++;
+            for (const key of Object.keys(state.mappings)) {
+                symbols.add(key);
+            }
+        }
+
+        this.symbols = Array.from(symbols).sort(); // set symbols
     }
 
     next(symbol: string) {

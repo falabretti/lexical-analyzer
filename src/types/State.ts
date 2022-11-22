@@ -1,4 +1,5 @@
 class State {
+    label?: string;
     isInitial: boolean = false;
     isFinal: boolean = false;
     mappings: Record<string, State> = {};

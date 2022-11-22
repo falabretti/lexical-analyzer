@@ -1,22 +1,23 @@
-import { Typography, Divider, Box, TextField, IconButton, Chip, ListItem } from "@mui/material";
+import { Typography, Divider, Box, TextField, IconButton, Chip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AutomatonContext, AutomatonContextType } from "../context/AutomatonContext";
 
 function TokenSection() {
 
-  const [value, setValue] = useState<String>("");
-  const [tokens, setTokens] = useState<String[]>([]);
+  const [value, setValue] = useState<string>("");
+  const { tokens, addToken, removeToken } = useContext(AutomatonContext) as AutomatonContextType;
 
-  function handleAddToken(token: String) {
+  function handleAddToken(token: string) {
     // TODO validate spaces
     // TODO validate empty
     // TODO validate duplicates
-    setTokens([...tokens, token]);
+    addToken(token);
     setValue("");
   }
 
-  function handleDeleteToken(token: String) {
-    setTokens(tokens.filter((t) => t !== token));
+  function handleDeleteToken(token: string) {
+    removeToken(token);
   }
 
   function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {

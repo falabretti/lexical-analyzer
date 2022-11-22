@@ -62,6 +62,10 @@ class Automaton {
 
         return Automaton.merge(...automatons);
     }
+
+    static emptyAutomaton() {
+        return new Automaton(new State());
+    }
 }
 
 export default Automaton;

@@ -3,6 +3,7 @@ import { Container, CssBaseline, Typography, } from '@mui/material';
 import Navbar from './Navbar';
 import MainGrid from './MainGrid';
 import TokenSection from './TokenSection';
+import DisplaySection from "./DisplaySection";
 import { AutomatonProvider } from "../context/AutomatonContext";
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
         <MainGrid>
           <TokenSection />
           <Typography>Input</Typography>
-          <Typography>Table/Graph</Typography>
+          <DisplaySection />
         </MainGrid>
       </Container>
     </AutomatonProvider>

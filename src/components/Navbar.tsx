@@ -6,7 +6,7 @@ function Navbar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h5" component="h1">
+                    <Typography variant="h5" component="h1" width="100%" align='center'>
                         Lexical Analyzer
                     </Typography>
                 </Toolbar>

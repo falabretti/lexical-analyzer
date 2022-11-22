@@ -1,7 +1,8 @@
-import { Container, CssBaseline, Typography } from '@mui/material';
 import React from 'react';
-import MainGrid from './MainGrid';
+import { Container, CssBaseline, Typography, } from '@mui/material';
 import Navbar from './Navbar';
+import MainGrid from './MainGrid';
+import TokenSection from './TokenSection';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Navbar />
       <Container maxWidth="lg">
         <MainGrid>
-          <Typography>Tokens</Typography>
+          <TokenSection />
           <Typography>Input</Typography>
           <Typography>Table/Graph</Typography>
         </MainGrid>

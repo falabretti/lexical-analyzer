@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography, Card, CardHeader } from '@mui/material';
 import React, { ReactElement } from 'react';
 
 type Props = {
@@ -14,13 +14,15 @@ function MainGrid(props: Props) {
   }
 
   return (
-    <Box sx={{ width: '100%', marginTop: '2rem' }}>
-      <Grid container spacing={2}>
+    <Box sx={{ width: '100%', marginTop: 4 }}>
+      <Grid container spacing={4}>
         {children.map(child => (
           <Grid item lg={12}>
-            <Paper sx={{ padding: '1rem' }}>
-              {child}
-            </Paper>
+            <Card>
+              <Box sx={{ p: 2 }}>
+                {child}
+              </Box>
+            </Card>
           </Grid>
         ))}
       </Grid>

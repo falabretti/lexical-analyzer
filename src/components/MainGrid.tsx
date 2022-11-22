@@ -14,7 +14,7 @@ function MainGrid(props: Props) {
   }
 
   return (
-    <Box sx={{ width: '100%', marginTop: 4 }}>
+    <Box sx={{ width: '100%', marginTop: 4, marginBottom: 4 }}>
       <Grid container spacing={4}>
         {children.map((child, id) => (
           <Grid item lg={12} key={id}>

@@ -11,7 +11,7 @@ function App() {
     <AutomatonProvider>
       <CssBaseline />
       <Navbar />
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <MainGrid>
           <TokenSection />
           <Typography>Input</Typography>

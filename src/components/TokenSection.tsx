@@ -12,6 +12,7 @@ function TokenSection() {
     // TODO validate spaces
     // TODO validate empty
     // TODO validate duplicates
+    // TODO case insensitive
     addToken(token);
     setValue("");
   }

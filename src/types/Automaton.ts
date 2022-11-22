@@ -1,6 +1,36 @@
+import Stack from "./Stack";
 import State from "./State";
 
-class Automaton {
+class AutomatonIterator implements Iterator<State> {
+
+    private stack: Stack<State> = new Stack();
+
+    constructor(automaton: Automaton) {
+        this.stack.push(automaton.initialState);
+    }
+
+    next(...args: [] | [undefined]): IteratorResult<State, any> {
+        if (this.stack.empty()) {
+            return {
+                done: true,
+                value: undefined
+            };
+        }
+
+        const state = this.stack.pop();
+        for (const [key, value] of Object.entries(state.mappings).reverse()) {
+            this.stack.push(value);
+        }
+
+        return {
+            done: false,
+            value: state
+        };
+    }
+}
+
+class Automaton implements Iterable<State> {
+    
     initialState: State;
     currentState: State;
     invalidState: State;
@@ -9,6 +39,10 @@ class Automaton {
         this.initialState = initialState;
         this.currentState = initialState;
         this.invalidState = new State();
+    }
+
+    [Symbol.iterator](): Iterator<State, any, undefined> {
+        return new AutomatonIterator(this);
     }
 
     next(symbol: string) {

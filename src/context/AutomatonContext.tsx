@@ -5,7 +5,9 @@ export type AutomatonContextType = {
   tokens: string[],
   addToken: (token: string) => void,
   removeToken: (token: string) => void,
-  automaton: Automaton
+  automaton: Automaton,
+  inputSymbol: (token: string) => void,
+  resetAutomaton: () => void
 }
 
 type Props = {
@@ -27,12 +29,25 @@ export function AutomatonProvider(props: Props) {
     setTokens(tokens.filter((t) => t !== token));
   }
 
+  function inputSymbol(symbol: string) {
+    automaton.inputSymbol(symbol);
+    setAutomaton(automaton.clone());
+  }
+
+  function resetAutomaton() {
+    automaton.reset();
+    setAutomaton(automaton.clone());
+  }
+
   useEffect(() => {
     setAutomaton(Automaton.fromMultipleWords(tokens));
   }, [tokens]);
 
   return (
-    <AutomatonContext.Provider value={{ tokens, addToken, removeToken, automaton }}>
+    <AutomatonContext.Provider value={{
+      tokens, addToken, removeToken,
+      automaton, inputSymbol, resetAutomaton
+    }}>
       {props.children}
     </AutomatonContext.Provider>
   )

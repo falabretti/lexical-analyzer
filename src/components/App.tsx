@@ -1,10 +1,11 @@
 import React from 'react';
-import { Container, CssBaseline, Typography, } from '@mui/material';
+import { Container, CssBaseline } from '@mui/material';
 import Navbar from './Navbar';
 import MainGrid from './MainGrid';
 import TokenSection from './TokenSection';
 import DisplaySection from "./DisplaySection";
 import { AutomatonProvider } from "../context/AutomatonContext";
+import InputSection from "./InputSection";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Container maxWidth="xl">
         <MainGrid>
           <TokenSection />
-          <Typography>Input</Typography>
+          <InputSection />
           <DisplaySection />
         </MainGrid>
       </Container>

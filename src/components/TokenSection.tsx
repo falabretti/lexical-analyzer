@@ -1,10 +1,11 @@
-import { Typography, Divider, Box, TextField, IconButton, Chip } from "@mui/material";
+import { Typography, Divider, Box, TextField, IconButton, Chip, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useContext, useState } from "react";
 import { AutomatonContext, AutomatonContextType } from "../context/AutomatonContext";
 
 function TokenSection() {
 
+  const theme = useTheme();
   const [value, setValue] = useState<string>("");
   const { tokens, addToken, removeToken } = useContext(AutomatonContext) as AutomatonContextType;
 
@@ -39,6 +40,12 @@ function TokenSection() {
           value={value}
           onKeyUp={handleKeyPress}
           onChange={(event) => setValue(event.target.value)}
+          sx={{
+            width: 0.35,
+            [theme.breakpoints.down('md')]: {
+              width: 1
+            }
+          }}
           InputProps={{
             endAdornment:
               <IconButton onClick={() => handleAddToken(value)}>

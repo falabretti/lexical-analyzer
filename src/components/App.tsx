@@ -6,6 +6,7 @@ import DisplaySection from "./DisplaySection";
 import { AutomatonProvider } from "../context/AutomatonContext";
 import InputSection from "./InputSection";
 import Section from "./Section";
+import HistorySection from "./HistorySection";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
               </Section>
               <Section>
                 <InputSection />
+              </Section>
+              <Section>
+                <HistorySection />
               </Section>
             </Box>
           </Grid>

@@ -8,10 +8,17 @@ export type AutomatonContextType = {
   automaton: Automaton,
   inputSymbol: (token: string) => void,
   resetAutomaton: () => void
+  history: TokenHistory[],
+  insertHistory: (token: string) => void
 }
 
 type Props = {
   children: ReactNode
+}
+
+type TokenHistory = {
+  token: string,
+  valid: boolean
 }
 
 export const AutomatonContext = createContext<AutomatonContextType | null>(null);
@@ -19,6 +26,7 @@ export const AutomatonContext = createContext<AutomatonContextType | null>(null)
 export function AutomatonProvider(props: Props) {
 
   const [tokens, setTokens] = useState<string[]>([]);
+  const [history, setHistory] = useState<TokenHistory[]>([]);
   const [automaton, setAutomaton] = useState<Automaton>(Automaton.emptyAutomaton());
 
   function addToken(token: string) {
@@ -39,6 +47,10 @@ export function AutomatonProvider(props: Props) {
     setAutomaton(automaton.clone());
   }
 
+  function insertHistory(token: string) {
+    setHistory([{ token, valid: automaton.isValid() }, ...history])
+  }
+
   useEffect(() => {
     setAutomaton(Automaton.fromMultipleWords(tokens));
   }, [tokens]);
@@ -46,7 +58,8 @@ export function AutomatonProvider(props: Props) {
   return (
     <AutomatonContext.Provider value={{
       tokens, addToken, removeToken,
-      automaton, inputSymbol, resetAutomaton
+      automaton, inputSymbol, resetAutomaton,
+      history, insertHistory
     }}>
       {props.children}
     </AutomatonContext.Provider>

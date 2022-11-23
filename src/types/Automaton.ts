@@ -34,6 +34,8 @@ class Automaton implements Iterable<State> {
     initialState: State;
     currentState: State;
     invalidState: State;
+    lastState?: State;
+    lastSymbol?: string;
     symbols: string[];
 
     constructor (initialState: State) {
@@ -64,7 +66,13 @@ class Automaton implements Iterable<State> {
         this.symbols = Array.from(symbols).sort(); // set symbols
     }
 
-    next(symbol: string) {
+    inputSymbol(symbol: string) {
+        if (this.currentState !== this.invalidState) {
+            this.lastState = this.currentState;
+        }
+
+        this.lastSymbol = symbol;
+
         if (symbol in this.currentState.mappings) {
             this.currentState = this.currentState.mappings[symbol];
         } else {
@@ -78,6 +86,22 @@ class Automaton implements Iterable<State> {
 
     reset() {
         this.currentState = this.initialState;
+        this.lastState = undefined;
+        this.lastSymbol = undefined;
+    }
+
+    isInInitialState() {
+        return this.currentState === this.initialState;
+    }
+
+    clone() {
+        const clone = new Automaton(this.initialState);
+        clone.currentState = this.currentState;
+        clone.lastState = this.lastState;
+        clone.lastSymbol = this.lastSymbol;
+        clone.invalidState = this.invalidState;
+
+        return clone;
     }
 
     static merge(...automatons: Automaton[]) {

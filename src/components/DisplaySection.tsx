@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
 import { Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { lightGreen, red } from "@mui/material/colors";
 import { AutomatonContext, AutomatonContextType } from "../context/AutomatonContext";
 import State from "../types/State";
 
 const cellBorderValue = "2px solid rgba(224, 224, 224, 1)";
 
-type DisplayTableHeadProps = {
-  symbols: string[]
-}
+function DisplayTableHead() {
 
-type DisplayTableBodyProps = {
-  symbols: string[],
-  states: State[]
-}
+  const { automaton } = useContext(AutomatonContext) as AutomatonContextType;
+  const { symbols, lastSymbol } = automaton;
 
-function DisplayTableHead(props: DisplayTableHeadProps) {
-
-  const { symbols } = props;
+  function calcBackgroundColor(symbol: string) {
+    if (!automaton.isInInitialState() && symbol === lastSymbol) {
+      return lightGreen[200];
+    }
+  }
 
   return (
     <TableHead>
@@ -26,7 +25,9 @@ function DisplayTableHead(props: DisplayTableHeadProps) {
           <Typography>δ</Typography>
         </TableCell>
         {symbols.map((symbol, id) => (
-          <TableCell key={id} sx={{ border: cellBorderValue }} align="center">
+          <TableCell key={id} align="center"
+            sx={{ border: cellBorderValue, backgroundColor: calcBackgroundColor(symbol) }}
+          >
             <Typography>{symbol}</Typography>
           </TableCell>
         ))}
@@ -35,14 +36,28 @@ function DisplayTableHead(props: DisplayTableHeadProps) {
   );
 }
 
-function DisplayTableBody(props: DisplayTableBodyProps) {
+function DisplayTableBody() {
 
-  const { symbols, states } = props;
+  const { automaton } = useContext(AutomatonContext) as AutomatonContextType;
+  const { currentState, invalidState, lastState, symbols, lastSymbol } = automaton;
+  const states = Array.from(automaton);
+
+  function calcRowBackgroundColor(state: State) {
+    if (state === currentState) {
+      return lightGreen[500];
+    } else if (state === lastState) {
+      if (currentState === invalidState) {
+        return red[500];
+      } else {
+        return lightGreen[200];
+      }
+    }
+  }
 
   return (
     <TableBody>
       {states.map((state, id) => (
-        <TableRow key={id}>
+        <TableRow key={id} sx={{ backgroundColor: calcRowBackgroundColor(state) }} >
           <TableCell sx={{ width: "10ch", borderBottom: "none" }} align="center">
             <Typography sx={{ fontSize: "150%" }}>
               {state.isInitial && "→"} {state.isFinal && "*"}
@@ -64,10 +79,7 @@ function DisplayTableBody(props: DisplayTableBodyProps) {
 
 function DisplaySection() {
 
-  const { automaton } = useContext(AutomatonContext) as AutomatonContextType;
-
-  const symbols = automaton.symbols;
-  const states = Array.from(automaton);
+  // TODO legend
 
   return (
     <section>
@@ -75,8 +87,8 @@ function DisplaySection() {
       <Divider />
       <TableContainer sx={{ marginTop: 2 }}>
         <Table>
-          <DisplayTableHead symbols={symbols} />
-          <DisplayTableBody symbols={symbols} states={states} />
+          <DisplayTableHead />
+          <DisplayTableBody />
         </Table>
       </TableContainer>
     </section>

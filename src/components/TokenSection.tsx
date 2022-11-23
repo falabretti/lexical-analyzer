@@ -30,7 +30,7 @@ function TokenSection() {
 
   return (
     <section >
-      <Typography variant="h6" gutterBottom>Add Tokens</Typography>
+      <Typography variant="h5" gutterBottom>Add Tokens</Typography>
       <Divider />
       <Box sx={{ p: 2, pl: 0 }}>
         <TextField

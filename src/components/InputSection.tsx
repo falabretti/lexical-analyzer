@@ -44,24 +44,19 @@ function InputSection() {
       <Typography variant="h5" gutterBottom>Recognize Tokens</Typography>
       <Divider />
       <Grid container>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Box sx={{ p: 2, pl: 0 }}>
             <TextField
               label="Token"
               variant="outlined"
               value={value}
               onKeyUp={handleKeyPress}
-              sx={{
-                width: 0.71,
-                [theme.breakpoints.down("md")]: {
-                  width: 1
-                }
-              }}
+              fullWidth
               onChange={(event) => setValue(event.target.value.trimEnd())}
             />
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Box sx={{ p: 1 }}>
             <Typography variant="h6">History</Typography>
             <List>

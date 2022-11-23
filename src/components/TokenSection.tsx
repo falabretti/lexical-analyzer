@@ -40,12 +40,7 @@ function TokenSection() {
           value={value}
           onKeyUp={handleKeyPress}
           onChange={(event) => setValue(event.target.value)}
-          sx={{
-            width: 0.35,
-            [theme.breakpoints.down('md')]: {
-              width: 1
-            }
-          }}
+          fullWidth
           InputProps={{
             endAdornment:
               <IconButton onClick={() => handleAddToken(value)}>

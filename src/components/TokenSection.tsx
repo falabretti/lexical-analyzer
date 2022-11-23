@@ -7,13 +7,10 @@ function TokenSection() {
 
   const theme = useTheme();
   const [value, setValue] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const { tokens, addToken, removeToken } = useContext(AutomatonContext) as AutomatonContextType;
 
   function handleAddToken(token: string) {
-    // TODO validate spaces
-    // TODO validate empty
-    // TODO validate duplicates
-    // TODO case insensitive
     addToken(token);
     setValue("");
   }
@@ -22,8 +19,29 @@ function TokenSection() {
     removeToken(token);
   }
 
+  function isValidToken(token: string) {
+    if (/\s/g.test(token)) {
+      setError("Token must not have whitespaces.");
+      return false;
+    }
+
+    if (tokens.find((entry) => entry === token)) {
+      setError("Token already added.");
+      return false;
+    }
+
+    return true;
+  }
+
   function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
     event.preventDefault();
+
+    if (isValidToken(value)) {
+      setError("");
+    } else {
+      return;
+    }
+
     if (event.key === "Enter") {
       handleAddToken(value);
     }
@@ -35,11 +53,13 @@ function TokenSection() {
       <Divider />
       <Box sx={{ p: 2, pl: 0 }}>
         <TextField
+          error={error.length > 0}
+          helperText={error}
           label="Token"
           variant="outlined"
           value={value}
           onKeyUp={handleKeyPress}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={(event) => setValue(event.target.value.toLowerCase())}
           fullWidth
           InputProps={{
             endAdornment:

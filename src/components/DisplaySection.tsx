@@ -39,13 +39,13 @@ function DisplayTableHead() {
 function DisplayTableBody() {
 
   const { automaton } = useContext(AutomatonContext) as AutomatonContextType;
-  const { currentState, invalidState, lastState, symbols, lastSymbol } = automaton;
+  const { currentState, invalidState, lastValidState, symbols } = automaton;
   const states = Array.from(automaton);
 
   function calcRowBackgroundColor(state: State) {
     if (state === currentState) {
       return lightGreen[500];
-    } else if (state === lastState) {
+    } else if (state === lastValidState) {
       if (currentState === invalidState) {
         return red[500];
       } else {

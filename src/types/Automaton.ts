@@ -1,6 +1,12 @@
 import Stack from "./Stack";
 import State from "./State";
 
+type AutomatonHistoryEntry = {
+    state: State,
+    lastValidState?: State,
+    lastSymbol?: string
+}
+
 class AutomatonIterator implements Iterator<State> {
 
     private stack: Stack<State> = new Stack();
@@ -34,9 +40,10 @@ class Automaton implements Iterable<State> {
     initialState: State;
     currentState: State;
     invalidState: State;
-    lastState?: State;
+    lastValidState?: State;
     lastSymbol?: string;
     symbols: string[];
+    history: Stack<AutomatonHistoryEntry> = new Stack();
 
     constructor (initialState: State) {
         this.initialState = initialState;
@@ -67,8 +74,14 @@ class Automaton implements Iterable<State> {
     }
 
     inputSymbol(symbol: string) {
+        this.history.push({
+            state: this.currentState,
+            lastValidState: this.lastValidState,
+            lastSymbol: this.lastSymbol
+        });
+        
         if (this.currentState !== this.invalidState) {
-            this.lastState = this.currentState;
+            this.lastValidState = this.currentState;
         }
 
         this.lastSymbol = symbol;
@@ -80,14 +93,22 @@ class Automaton implements Iterable<State> {
         }
     }
 
+    goBack() {
+        const lastHistoryEntry = this.history.pop();
+        this.currentState = lastHistoryEntry.state;
+        this.lastValidState = lastHistoryEntry.lastValidState;
+        this.lastSymbol = lastHistoryEntry.lastSymbol;
+    }
+
     isValid() {
         return this.currentState.isFinal;
     }
 
     reset() {
         this.currentState = this.initialState;
-        this.lastState = undefined;
+        this.lastValidState = undefined;
         this.lastSymbol = undefined;
+        this.history = new Stack();
     }
 
     isInInitialState() {
@@ -96,11 +117,7 @@ class Automaton implements Iterable<State> {
 
     clone() {
         const clone = new Automaton(this.initialState);
-        clone.currentState = this.currentState;
-        clone.lastState = this.lastState;
-        clone.lastSymbol = this.lastSymbol;
-        clone.invalidState = this.invalidState;
-
+        Object.assign(clone, this);
         return clone;
     }
 

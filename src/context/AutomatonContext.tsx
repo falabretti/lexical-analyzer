@@ -7,6 +7,7 @@ export type AutomatonContextType = {
   removeToken: (token: string) => void,
   automaton: Automaton,
   inputSymbol: (token: string) => void,
+  goBack: () => void,
   resetAutomaton: () => void
   history: TokenHistory[],
   insertHistory: (token: string) => void
@@ -42,6 +43,11 @@ export function AutomatonProvider(props: Props) {
     setAutomaton(automaton.clone());
   }
 
+  function goBack() {
+    automaton.goBack();
+    setAutomaton(automaton.clone());
+  }
+
   function resetAutomaton() {
     automaton.reset();
     setAutomaton(automaton.clone());
@@ -58,7 +64,7 @@ export function AutomatonProvider(props: Props) {
   return (
     <AutomatonContext.Provider value={{
       tokens, addToken, removeToken,
-      automaton, inputSymbol, resetAutomaton,
+      automaton, inputSymbol, goBack, resetAutomaton,
       history, insertHistory
     }}>
       {props.children}

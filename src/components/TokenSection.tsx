@@ -21,12 +21,12 @@ function TokenSection() {
 
   function isValidToken(token: string) {
     if (/\s/g.test(token)) {
-      setError("Token must not have whitespaces.");
+      setError("Token não pode ter espaços em branco.");
       return false;
     }
 
     if (tokens.find((entry) => entry === token)) {
-      setError("Token already added.");
+      setError("Token já adicionado.");
       return false;
     }
 
@@ -49,7 +49,7 @@ function TokenSection() {
 
   return (
     <section >
-      <Typography variant="h5" gutterBottom>Add Tokens</Typography>
+      <Typography variant="h5" gutterBottom>Adicionar Tokens</Typography>
       <Divider />
       <Box sx={{ p: 2, pl: 0 }}>
         <TextField

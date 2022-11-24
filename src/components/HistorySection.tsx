@@ -11,7 +11,7 @@ function HistorySection() {
 
   return (
     <section>
-      <Typography variant="h5" gutterBottom>History</Typography>
+      <Typography variant="h5" gutterBottom>Histórico de Reconhecimento</Typography>
       <Divider />
       <Box sx={{ p: 1 }}>
         <List>

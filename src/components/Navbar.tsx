@@ -7,7 +7,7 @@ function Navbar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h4" component="h1" width="100%" align='center'>
-                        Lexical Analyzer
+                        Analisador Léxico
                     </Typography>
                 </Toolbar>
             </AppBar>

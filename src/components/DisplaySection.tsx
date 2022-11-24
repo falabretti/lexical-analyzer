@@ -81,7 +81,7 @@ function DisplaySection() {
 
   return (
     <section>
-      <Typography variant="h5" gutterBottom>View Automaton</Typography>
+      <Typography variant="h5" gutterBottom>Estados do Autômato</Typography>
       <Divider />
       <TableContainer sx={{ marginTop: 2 }}>
         <Table>

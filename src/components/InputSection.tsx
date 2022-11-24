@@ -1,5 +1,5 @@
 import { Box, Divider, TextField, Typography } from "@mui/material";
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useContext } from "react";
 import { AutomatonContext, AutomatonContextType } from "../context/AutomatonContext";
 
@@ -40,7 +40,7 @@ function InputSection() {
 
   return (
     <section>
-      <Typography variant="h5" gutterBottom>Recognize Tokens</Typography>
+      <Typography variant="h5" gutterBottom>Reconhecer Tokens</Typography>
       <Divider />
       <Box sx={{ p: 2, pl: 0 }}>
         <TextField

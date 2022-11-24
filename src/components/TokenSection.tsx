@@ -61,6 +61,7 @@ function TokenSection() {
           onKeyUp={handleKeyPress}
           onChange={(event) => setValue(event.target.value.toLowerCase())}
           fullWidth
+          autoComplete="off"
           InputProps={{
             endAdornment:
               <IconButton onClick={() => handleAddToken(value)}>

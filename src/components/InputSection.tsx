@@ -57,6 +57,7 @@ function InputSection() {
           onKeyUp={handleKeyPress}
           onPaste={e => e.preventDefault()}
           fullWidth
+          autoComplete="off"
           onChange={handleChange}
         />
       </Box>

@@ -79,8 +79,6 @@ function DisplayTableBody() {
 
 function DisplaySection() {
 
-  // TODO legend
-
   return (
     <section>
       <Typography variant="h5" gutterBottom>View Automaton</Typography>

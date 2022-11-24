@@ -1,5 +1,5 @@
 import { Box, Divider, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { useContext } from "react";
 import { AutomatonContext, AutomatonContextType } from "../context/AutomatonContext";
 
@@ -8,9 +8,14 @@ function InputSection() {
   const { inputSymbol, goBack, resetAutomaton, insertHistory } = useContext(AutomatonContext) as AutomatonContextType;
   const [value, setValue] = useState<string>("");
 
-  function handleInputToken(token: string) {
-    // TODO handle fast typing
-    inputSymbol(token.slice(-1));
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value.toLowerCase().trimEnd();
+
+    if (newValue.length > value.length) {
+      inputSymbol(newValue.slice(-1)); 
+    }
+
+    setValue(newValue);
   }
 
   function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -26,12 +31,6 @@ function InputSection() {
     if (event.key === "Backspace") {
       goBack();
     }
-
-    if (event.key.length > 1) {
-      return;
-    }
-
-    handleInputToken(value);
   }
 
   function moveCursorToEnd(target: HTMLInputElement) {
@@ -58,7 +57,7 @@ function InputSection() {
           onKeyUp={handleKeyPress}
           onPaste={e => e.preventDefault()}
           fullWidth
-          onChange={(event) => setValue(event.target.value.toLowerCase().trimEnd())}
+          onChange={handleChange}
         />
       </Box>
     </section>

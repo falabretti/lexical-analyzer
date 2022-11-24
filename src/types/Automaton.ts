@@ -94,6 +94,10 @@ class Automaton implements Iterable<State> {
     }
 
     goBack() {
+        if (this.history.empty()) {
+            return;
+        }
+
         const lastHistoryEntry = this.history.pop();
         this.currentState = lastHistoryEntry.state;
         this.lastValidState = lastHistoryEntry.lastValidState;
